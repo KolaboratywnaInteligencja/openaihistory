@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historia OpenAI i ChatGPT</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3a8a 0%, #10b981 50%, #6366f1 100%);
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+        }
+        
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .header .logo {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+        
+        .header .subtitle {
+            font-size: 1.3em;
+            opacity: 0.95;
+            margin-bottom: 10px;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+        
+        .stat-box {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            padding: 20px 30px;
+            border-radius: 15px;
+            color: white;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 25px;
+            padding: 50px;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.4);
+        }
+        
+        .section-title {
+            font-size: 2em;
+            color: #1e3a8a;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #10b981;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .timeline {
+            position: relative;
+            padding: 30px 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 100%;
+            background: linear-gradient(180deg, #1e3a8a, #10b981, #6366f1);
+            border-radius: 3px;
+        }
+        
+        .era-divider {
+            text-align: center;
+            margin: 40px 0;
+            position: relative;
+        }
+        
+        .era-divider span {
+            background: linear-gradient(135deg, #10b981, #6366f1);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1.1em;
+            display: inline-block;
+            box-shadow: 0 5px 20px rgba(16, 185, 129, 0.4);
+            z-index: 2;
+            position: relative;
+        }
+        
+        .timeline-item {
+            display: flex;
+            margin-bottom: 50px;
+            position: relative;
+            align-items: center;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            flex-direction: row;
+        }
+        
+        .timeline-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+        
+        .timeline-content {
+            width: 45%;
+            padding: 25px;
+            background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%);
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+            transition: all 0.4s ease;
+            position: relative;
+            border: 2px solid transparent;
+        }
+        
+        .timeline-content:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            border-color: #10b981;
+        }
+        
+        .timeline-marker {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 30px;
+            background: white;
+            border: 5px solid #1e3a8a;
+            border-radius: 50%;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+        
+        .timeline-item:hover .timeline-marker {
+            width: 40px;
+            height: 40px;
+            border-width: 6px;
+            box-shadow: 0 0 20px rgba(30, 58, 138, 0.5);
+        }
+        
+        .timeline-item.major .timeline-marker {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #10b981, #6366f1);
+            border: 5px solid white;
+            box-shadow: 0 0 25px rgba(16, 185, 129, 0.6);
+            animation: pulse-major 2s infinite;
+        }
+        
+        @keyframes pulse-major {
+            0%, 100% { transform: translateX(-50%) scale(1); }
+            50% { transform: translateX(-50%) scale(1.15); }
+        }
+        
+        .timeline-item.current .timeline-marker {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #ef4444, #f59e0b);
+            border: 6px solid white;
+            box-shadow: 0 0 35px rgba(239, 68, 68, 0.7);
+            animation: pulse-current 1.5s infinite;
+        }
+        
+        @keyframes pulse-current {
+            0%, 100% { transform: translateX(-50%) scale(1); }
+            50% { transform: translateX(-50%) scale(1.2); }
+        }
+        
+        .date {
+            font-size: 1em;
+            color: #1e3a8a;
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .date::before {
+            content: '📅';
+            font-size: 1.2em;
+        }
+        
+        .version {
+            font-size: 1.6em;
+            font-weight: bold;
+            color: #0f172a;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .model-icon {
+            font-size: 1.2em;
+        }
+        
+        .description {
+            color: #475569;
+            line-height: 1.7;
+            margin-bottom: 15px;
+            font-size: 1.05em;
+        }
+        
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin: 15px 0;
+            padding: 15px;
+            background: rgba(255,255,255,0.6);
+            border-radius: 12px;
+        }
+        
+        .metric-item {
+            text-align: center;
+            padding: 8px;
+        }
+        
+        .metric-value {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #1e3a8a;
+            display: block;
+        }
+        
+        .metric-label {
+            font-size: 0.8em;
+            color: #64748b;
+            margin-top: 4px;
+        }
+        
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .feature-tag {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            font-weight: 600;
+            box-shadow: 0 3px 10px rgba(16, 185, 129, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-tag:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.5);
+        }
+        
+        .feature-tag.reasoning {
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+        }
+        
+        .feature-tag.image {
+            background: linear-gradient(135deg, #ec4899, #db2777);
+        }
+        
+        .feature-tag.video {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+        }
+        
+        .feature-tag.code {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+        }
+        
+        .family-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: linear-gradient(135deg, #f43f5e, #e11d48);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: 600;
+            box-shadow: 0 3px 10px rgba(244, 63, 94, 0.4);
+        }
+        
+        .current-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            font-weight: 700;
+            animation: glow 2s infinite;
+            box-shadow: 0 5px 20px rgba(239, 68, 68, 0.5);
+        }
+        
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 5px 20px rgba(239, 68, 68, 0.5); }
+            50% { box-shadow: 0 8px 30px rgba(239, 68, 68, 0.8); }
+        }
+        
+        .product-section {
+            margin-top: 60px;
+            padding: 40px;
+            background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%);
+            border-radius: 20px;
+            border: 3px solid #8b5cf6;
+        }
+        
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .product-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.2);
+            border-color: #8b5cf6;
+        }
+        
+        .product-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+        
+        .product-name {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #0f172a;
+            margin-bottom: 10px;
+        }
+        
+        .product-desc {
+            color: #64748b;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .product-date {
+            font-size: 0.9em;
+            color: #8b5cf6;
+            font-weight: 600;
+        }
+        
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 30px;
+            }
+            
+            .timeline-item,
+            .timeline-item:nth-child(even) {
+                flex-direction: row;
+                padding-left: 70px;
+            }
+            
+            .timeline-content {
+                width: 100%;
+            }
+            
+            .timeline-marker {
+                left: 30px;
+            }
+            
+            .container {
+                padding: 30px 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .stats {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">🤖</div>
+        <h1>Historia OpenAI i ChatGPT</h1>
+        <p class="subtitle">Od pierwszego GPT do rewolucyjnego GPT-5.1 - Pełna ewolucja sztucznej inteligencji</p>
+    </div>
+    
+    <div class="stats">
+        <div class="stat-box">
+            <div class="stat-number">700M+</div>
+            <div class="stat-label">Aktywnych użytkowników tygodniowo</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-number">2018-2025</div>
+            <div class="stat-label">7 lat innowacji</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-number">$300B</div>
+            <div class="stat-label">Wycena firmy (2025)</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-number">20M+</div>
+            <div class="stat-label">Płatnych subskrybentów</div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <h2 class="section-title">
+            <span>📜</span>
+            Kompletna Historia Modeli GPT
+        </h2>
+        
+        <div class="timeline">
+            <div class="era-divider">
+                <span>🌱 ERA POCZĄTKOWA - Fundamenty (2018-2019)</span>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="date">Czerwiec 2018</div>
+                    <div class="version"><span class="model-icon">🎯</span>GPT-1 (GPT)</div>
+                    <div class="description">Pierwszy model generatywny wykorzystujący architekturę Transformer. Przełom w unsupervised pre-training, który zmienił podejście do NLP na zawsze.</div>
+                    <div class="metrics">
+                        <div class="metric-item">
+                            <span class="metric-value">117M</span>
+                            <span class="metric-label">Parametrów</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-value">7K</span>
+                            <span class="metric-label">Książek treningowych</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-value">~4GB</span>
+                            <span class="metric-label">Danych</span>
+                        </div>
+                    </div>
+                    <div class="features">
+                        <span class="feature-tag">Transformer architecture</span>
+                        <span class="feature-tag">BooksCorpus dataset</span>
+                        <span class="feature-tag">Transfer learning</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item major">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="date">Luty 2019</div>
+                    <div class="version"><span class="model-icon">🚀</span>GPT-2</div>
+                    <div class="description">Skok o 10x więcej parametrów! OpenAI początkowo wstrzymało pełne wydanie z obawy o dezinformację. Pierwszy model AI wywołujący globalną debatę o odpowiedzialnym wdrażaniu.</div>
+                    <div class="metrics">
+                        <div class="metric-item">
+                            <span class="metric-value">1.5B</span>
+                            <span class="metric-label">Parametrów</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-value">40GB</span>
+                            <span class="metric-label">Danych (WebText)</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-value">8M</span>
+                            <span class="metric-label">Stron www</span>
+                        </div>
+                    </div>
+                    <div class="features">
+                        <span class="feature-tag">Zero-shot learning</span>
+                        <span class="feature-tag">Kontrowersyjne wydanie</span>
+                        <span class="feature-tag">Lepsza koherencja</span>
+                        <span class="feature-tag">WebText dataset</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="era-divider">
+                <span>💫 ERA PRZEŁOMU - Skalowanie (2020-2021)</span>
+            </div>
+            
+            <div class="timeline-item major">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="date">Czerwiec 2020</div>
+                    <div class="version"><span class="model-icon">🌟</span>GPT-3</div>
+                    <div class="description">Rewolucyjny skok do 175B parametrów! Pierwszy komercyjny sukces OpenAI. Few-shot learning bez fine-tuningu. Zapoczątkował erę praktycznego zastosowania LLM w biznesie.</div>
+                    <div class="metrics">
+                        <div class="metric-item">
+                            <span class="metric-value">175B</span>
+                            <span class="metric-label">Parametrów</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-value">100+</span>
+                            <span class="metric-label">Języków</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-value">45TB</span>
+                            <span class="metric-label">Danych tekstowych</span>
+                        </div>
+                    </div>
+                    <div class="features">
+                        <span class="feature-tag">Few-shot learning</span>
+                        <span class="feature-tag">OpenAI API</span>
+                        <span class="feature-tag">Komercjalizacja</span>
+                        <span class="feature-tag">Wielojęzyczność</span>
+                        <span class="feature-tag code">Generowanie kodu</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="date">Sierpień 2021</div>
+                    <div class="version"><span class="model-icon">💻</span>Codex</div>
+                    <div class="description">Specjalizowany model fine-tunowany z GPT-3 do zadań programistycznych. Napędzał GitHub Copilot i zrewolucjonizował programowanie wspomagane AI.</div>
+                    <div class="metrics">
+                        <div class="metric-item">
+                            <span class="metric-value">12B</span>
+                            <span class="metric-label">Parametrów</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-value">Miliardy</span>
+                            <span class="metric-label">Linii kodu</span>
+                        </div>
+                    </div>
+                    <div class="features">
+                        <span class="feature-tag code">Python, JS, C++</span>
+                        <span class="feature-tag code">GitHub Copilot</span>
+                        <span class="feature-tag code">Code generation</span>
+                        <span class="feature-tag code">Dokumentacja</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="date">Styczeń 2021</div>
+                    <div class="version"><span class="model-icon">🎨</span>DALL-E 1</div>
+                    <div class="description">Pierwszy multimodalny model text-to-image od OpenAI. Zbudowany na bazie GPT-3 z 12B parametrów, wprowadził świat do generowania obrazów z tekstu.</div>
+                    <div class="features">
+                        <span class="feature-tag image">Text-to-image</span>
+                        <span class="feature-tag image">12B parametrów</span>
+                        <span class="feature-tag">CLIP evaluation</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="era-divider">
+                <span>🔥 ERA CHATGPT - Masowa Adopcja (2022-2023)</span>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="date">Marzec 2022</div>
+                    <div class="version"><span class="model-icon">⚡</span>GPT-3.5</div>
+                    <div class="description">Ulepszona wersja GPT-3 z lepszym rozumowaniem i dokładnością faktyczną. Most między badaniami a rzeczywistym wdrożeniem.</div>
+                    <div class="features">
+                        <span class="feature-tag">Lepsze rozumowanie</span>
+                        <span class="feature-tag">Dokładność faktyczna</span>
+                        <span class="feature-tag">Niższe koszty</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="date">Kwiecień 2022</div>
+                    <div class="version"><span class="model-icon">🎨</span>DALL-E 2</div>
+                    <div class="description">Czterokrotnie wyższa rozdzielczość obrazów! 3.5B parametrów, fotorealistyczne generowanie obrazów. Beta publiczna we wrześniu 2022.</div>
+                    <div class="metrics">
+                        <div class="metric-item">
+                            <span class="metric-value">4x</span>
+                            <span class="metric-label">Lepsza rozdzielczość</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-value">88.8%</span>
+                            <span class="metric-label">Fotorealizm</span>
+                        </div>
+                    </div>
+                    <div class="features">
+                        <span class="feature-tag image">Inpainting</span>
+                        <span class="feature-tag image">Outpainting</span>
+                        <span class="feature-tag image">Variations</span>
+                        <span class="feature-tag image">CLIP-guided</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item major">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="date">30 Listopada 2022</div>
+                    <div class="version"><span class="model-icon">💬</span>ChatGPT (GPT-3.5)</div>
+                    <div class="description">🔥 PRZEŁOMOWY MOMENT! Najszybciej rosnąca aplikacja konsumencka w historii. 1 milion użytkowników w 5 dni, 100 milionów w 2 miesiące! RLHF zmienił sposób interakcji z AI.</div>
+                    <div class="metrics">
+                        <div class="metric-item">
+                            <span class="metric-value">1M</span>
+                            <span class="metric-label">Użytkowników w 5 dni</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-value">100M</span>
+                            <span class="metric-label">W 2 miesiące</span>
+                        </div>
+                    </div>
+                    <div class="features">
+                        <span class="feature-tag">RLHF training</span>
+                        <span class="feature-tag">Darmowa wersja</span>
+                        <span class="feature-tag">Konwersacyjny UI</span>
+                        <span class="feature-tag">Wirusowy sukces</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="date">1 Lutego 2023</div>
+                    <div class="version"><span class="model-icon">⭐</span>ChatGPT Plus</div>
+                    <div class="description">Premium subskrypcja za $20/miesiąc. Priorytetowy dostęp, szybsze odpowiedzi i dostęp do nowych funkcji.</div>
+                    <div class="features">
+                        <span class="feature-tag">$20/miesiąc</span>
+                        <span class="feature-tag">Priorytetowy dostęp</span>
+                        <span class="feature-tag">Szybsze odpowiedzi</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item major">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="date">14 Marca 2023</div>
+                    <div class="version"><span class="model-icon">🎓</span>GPT-4</div>
+                    <div class="description">Pierwszy multimodalny GPT! Akceptuje obrazy i tekst. Egzamin prawniczy: top 10%. Znacznie lepsze rozumowanie i mniej halucynacji.</div>
+                    <div class="metrics">
+                        <div class="metric-item">
+                            <span class="metric-value">Top 10%</span>
+                            <span class="metric-label">Bar exam</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-value">~1.7T</span>
+                            <span class="metric-label">Parametrów (szacowane)</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-value">32K</span>
+                            <span class="metric-label">Token context</span>
+                        </div>
+                    </div>
+                    <div class="features">
+                        <span class="feature-tag image">Multimodal (vision)</span>
+                        <span class="feature-tag">Zaawansowane rozumowanie</span>
+                        <span class="feature-tag">Mniej halucynacji</span>
+                        <span class="feature-tag">128K context (Turbo)</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="date">Wrzesień 2023</div>
+                    <div class="version"><span class="model-icon">🎨</span>DALL-E 3</div>
+                    <div class="description">Znacznie lepsze zrozumienie niuansów i szczegółów. Natywna integracja z ChatGPT dla użytkowników Plus i Enterprise.</div>
+                    <div class="features">
+                        <span class="feature-tag image">Lepsze prompt following</span>
+                        <span class="feature-tag image">ChatGPT integration</span>
+                        <span class="feature-tag image">C2PA watermarks</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="date">6 Listopada 2023</div>
+                    <div class="version"><span class="model-icon">🤖</span>GPTs (Custom GPTs)</div>
+                    <div class="description">Możliwość tworzenia spersonalizowanych wersji ChatGPT do konkretnych celów. GPT Store uruchomiony w styczniu 2024.</div>
+                    <div class="features">
+                        <span class="feature-tag">Customization</span>
+                        <span class="feature-tag">No-code builder</span>
+                        <span class="feature-tag">GPT Store</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="era-divider">
+                <span>🌈 ERA MULTIMODALNA - Wizja i Dźwięk (2024)</span>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="date">Luty 2024</div>
+                    <div class="version"><span class="model-icon">🎬</span>Sora 1 (Preview)</div>
+                    <div class="description">Rewolucyjny model text-to-video! OpenAI zaprezentował zapowiedź Sora - do 60 sekund wideo w wysokiej jakości z promptu tekstowego.</div>
+                    <div class="features">
+                        <span class="feature-tag video">Text-to-video</span>
+                        <span class="feature-tag video">60 sekund wideo</span>
+                        <span class="feature-tag video">Diffusion transformer</span>
+                        <span class="feature-tag">Tylko preview</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item major">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="date">13 Maja 2024</div>
+                    <div class="version"><span class="model-icon">🌟</span>GPT-4o <span class="family-badge">⚡ Flagship</span></div>
+                    <div class="description">GPT-4 "Omni" - natywnie multimodalny! Tekst, obraz, audio w czasie rzeczywistym. 50% taniej niż GPT-4 Turbo. Darmowy dostęp dla wszystkich z limitami.</div>
+                    <div class="metrics">
+                        <div class="metric-item">
+                            <span class="metric-value">50%</span>
+                            <span class="metric-label">Tańszy niż GPT-4</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-value">128K</span>
+                            <span class="metric-label">Token context</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-value">88.7%</span>
+                            <span class="metric-label">MMLU benchmark</span>
+                        </div>
+                    </div>
+                    <div class="features">
+                        <span class="feature-tag image">Native multimodal</span>
+                        <span class="feature-tag">Real-time audio</span>
+                        <span class="feature-tag">Darmowy dla wszystkich</span>
+                        <span class="feature-tag">Advanced Voice Mode</span>
+                        <span class="feature-tag image">DALL-E integration</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item major">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="date">12 Września 2024</div>
+                    <div class="version"><span class="model-icon">🧠</span>GPT-o1 <span class="family-badge">🎯 Reasoning</span></div>
+                    <div class="description">Pierwszy model z chain-of-thought reasoning! "Myśli" przed odpowiedzią. Dedykowany dla nauki, matematyki i programowania. Wcześniej znany jako "Strawberry".</div>
+                    <div class="metrics">
+                        <div class="metric-item">
+                            <span class="metric-value">83%</span>
+                            <span class="metric-label">IOI Gold Medal</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-value">Top 500</span>
+                            <span class="metric-label">Codeforces</span>
+                        </div>
+                    </div>
+                    <div class="features">
+                        <span class="feature-tag reasoning">Chain-of-thought</span>
+                        <span class="feature-tag reasoning">PhD-level science</span>
+                        <span class="feature-tag code">Advanced coding</span>
+                        <span class="feature-tag">Math olympiad level</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="date">9 Grudnia 2024</div>
+                    <div class="version"><span class="model-icon">🎬</span>Sora 1 (Public)</div>
+                    <div class="description">Publiczne wydanie Sora dla użytkowników ChatGPT Plus i Pro w USA i Kanadzie. Generowanie wideo do 60 sekund z widocznym watermarkiem.</div>
+                    <div class="features">
+                        <span class="feature-tag video">Public release</span>
+                        <span class="feature-tag video">ChatGPT integration</span>
+                        <span class="feature-tag video">Safety watermark</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="date">Grudzień 2024</div>
+                    <div class="version"><span class="model-icon">💎</span>ChatGPT Pro</div>
+                    <div class="description">Premium tier za $200/miesiąc. Nieograniczony dostęp do o1, GPT-4o i przyszłych modeli. Enhanced Voice Mode dla profesjonalistów.</div>
+                    <div class="features">
+                        <span class="feature-tag">$200/miesiąc</span>
+                        <span class="feature-tag">Unlimited o1</span>
+                        <span class="feature-tag">o1-pro access</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="era-divider">
+                <span>🚀 ERA REASONING - Inteligencja Nowej Generacji (2025)</span>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="date">23 Stycznia 2025</div>
+                    <div class="version"><span class="model-icon">🤖</span>Operator</div>
+                    <div class="description">Agent AI do automatyzacji webowej. Wykonuje zadania w przeglądarce zgodnie z celami użytkownika. Tylko dla użytkowników Pro w USA.</div>
+                    <div class="features">
+                        <span class="feature-tag">AI agent</span>
+                        <span class="feature-tag">Web automation</span>
+                        <span class="feature-tag">Goal execution</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="date">31 Stycznia 2025</div>
+                    <div class="version"><span class="model-icon">⚡</span>o3-mini</div>
+                    <div class="description">Mniejszy model reasoning, szybszy i bardziej efektywny kosztowo. Regulowane poziomy reasoning effort (low/medium/high).</div>
+                    <div class="features">
+                        <span class="feature-tag reasoning">Adjustable reasoning</span>
+                        <span class="feature-tag">Cost-efficient</span>
+                        <span class="feature-tag">Faster responses</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="date">Luty 2025</div>
+                    <div class="version"><span class="model-icon">🧬</span>GPT-4.5 (Orion)</div>
+                    <div class="description">Projekt "Orion" nie spełnił oczekiwań jako GPT-5, więc wydany jako GPT-4.5. Skupiony na inteligencji emocjonalnej i konwersacji przypominającej ludzką.</div>
+                    <div class="features">
+                        <span class="feature-tag">Emotional intelligence</span>
+                        <span class="feature-tag">Human-like conversation</span>
+                        <span class="feature-tag">Better tone understanding</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="date">Marzec 2025</div>
+                    <div class="version"><span class="model-icon">🎨</span>GPT Image 1</div>
+                    <div class="description">Zastępca DALL-E 3 w ChatGPT. Lepsze renderowanie tekstu, przyjmuje obrazy jako input, umożliwia edycję i inpainting obrazów.</div>
+                    <div class="features">
+                        <span class="feature-tag image">Text rendering</span>
+                        <span class="feature-tag image">Image input</span>
+                        <span class="feature-tag image">Image editing</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item major">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="date">16 Kwietnia 2025</div>
+                    <div class="version"><span class="model-icon">🧠</span>o3 + o4-mini <span class="family-badge">🎯 Reasoning v2</span></div>
+                    <div class="description">Najinteligentniejsze modele reasoning! o3 stawia nowy standard, o4-mini jest najlepszy na AIME 2024/2025. Pierwsze modele używające wszystkich narzędzi agentic w ChatGPT.</div>
+                    <div class="metrics">
+                        <div class="metric-item">
+                            <span class="metric-value">20%</span>
+                            <span class="metric-label">Mniej błędów vs o1</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-value">93.4%</span>
+                            <span class="metric-label">AIME 2024 (o4-mini)</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-value">200K</span>
+                            <span class="metric-label">Token context</span>
+                        </div>
+                    </div>
+                    <div class="features">
+                        <span class="feature-tag reasoning">Extended thinking</span>
+                        <span class="feature-tag">Tool combination</span>
+                        <span class="feature-tag image">Visual reasoning</span>
+                        <span class="feature-tag code">SWE-bench 69%</span>
+                        <span class="feature-tag">Web search integration</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="date">30 Kwietnia 2025</div>
+                    <div class="version"><span class="model-icon">💻</span>GPT-4.1 + 4.1 Mini</div>
+                    <div class="description">Specjalistyczny model dla kodowania. GPT-4.1 ma 1M token context limit! Silniejszy w precyzyjnym follow-up instrukcji i web development.</div>
+                    <div class="metrics">
+                        <div class="metric-item">
+                            <span class="metric-value">1M</span>
+                            <span class="metric-label">Token context (4.1)</span>
+                        </div>
+                    </div>
+                    <div class="features">
+                        <span class="feature-tag code">Coding specialist</span>
+                        <span class="feature-tag code">Web development</span>
+                        <span class="feature-tag">Instruction following</span>
+                        <span class="feature-tag">4.1 Mini fallback</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="date">10 Czerwca 2025</div>
+                    <div class="version"><span class="model-icon">💎</span>o3-pro</div>
+                    <div class="description">Wersja o3 dla maksymalnego rozumowania. Zastąpił o1-pro dla użytkowników Pro i Team. Myśli dłużej dla najbardziej niezawodnych odpowiedzi.</div>
+                    <div class="features">
+                        <span class="feature-tag reasoning">Maximum thinking time</span>
+                        <span class="feature-tag">Pro/Team exclusive</span>
+                        <span class="feature-tag">Highest reliability</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item major">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="date">7 Sierpnia 2025</div>
+                    <div class="version"><span class="model-icon">🌟</span>GPT-5 <span class="family-badge">🔥 Flagship</span></div>
+                    <div class="description">🎉 PRZEŁOM! Nowa generacja frontier model! Łączy reasoning i non-reasoning w jednym interfejsie. 45% mniej halucynacji. Nowy domyślny model w ChatGPT.</div>
+                    <div class="metrics">
+                        <div class="metric-item">
+                            <span class="metric-value">94.6%</span>
+                            <span class="metric-label">AIME 2025</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-value">74.9%</span>
+                            <span class="metric-label">SWE-bench</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-value">45%</span>
+                            <span class="metric-label">Mniej halucynacji</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-value">84.2%</span>
+                            <span class="metric-label">MMMU</span>
+                        </div>
+                    </div>
+                    <div class="features">
+                        <span class="feature-tag">Adaptive reasoning</span>
+                        <span class="feature-tag">State-of-the-art</span>
+                        <span class="feature-tag">Wszystkie narzędzia</span>
+                        <span class="feature-tag code">Advanced coding</span>
+                        <span class="feature-tag">Health expert</span>
+                        <span class="feature-tag">Less hallucination</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="date">30 Września 2025</div>
+                    <div class="version"><span class="model-icon">🎬</span>Sora 2</div>
+                    <div class="description">Druga generacja Sora z funkcjami social media! Aplikacja iOS/Android. Lepsza fizyka, realistyczność i kontrola. Zsynchronizowany dialog i efekty dźwiękowe.</div>
+                    <div class="features">
+                        <span class="feature-tag video">Social network</span>
+                        <span class="feature-tag video">iOS/Android app</span>
+                        <span class="feature-tag video">Synchronized audio</span>
+                        <span class="feature-tag video">Better physics</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="timeline-item major current">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="date">13 Listopada 2025</div>
+                    <div class="version"><span class="model-icon">⚡</span>GPT-5.1 Instant + Thinking <span class="current-badge">✨ AKTUALNY</span></div>
+                    <div class="description">🚀 NAJNOWSZY! Inteligentniejszy, cieplejszy, bardziej konwersacyjny GPT-5! Dynamiczna adaptacja czasu myślenia. Lepsze follow-up instrukcji. Nowe kontrole tonu i stylu.</div>
+                    <div class="metrics">
+                        <div class="metric-item">
+                            <span class="metric-value">2-3x</span>
+                            <span class="metric-label">Szybszy niż GPT-5</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-value">50%</span>
+                            <span class="metric-label">Mniej tokenów thinking</span>
+                        </div>
+                    </div>
+                    <div class="features">
+                        <span class="feature-tag">Warmer tone</span>
+                        <span class="feature-tag">Dynamic thinking</span>
+                        <span class="feature-tag">Personality presets</span>
+                        <span class="feature-tag">Better instructions</span>
+                        <span class="feature-tag code">Improved coding</span>
+                        <span class="feature-tag">24h prompt cache</span>
+                    </div>
+                </div>
+            </div>
